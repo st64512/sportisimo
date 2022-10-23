@@ -1,0 +1,46 @@
+{block content}
+	<div>
+		<h1 n:block="title">Značky</h1>
+		<button>Přidat značku</button>
+	</div>
+
+	<table>
+		<tr>
+			<th>Název</th>
+			<th>Akce</th>
+		</tr>
+		<tr n:foreach="$brands as $brand">
+			<td>{$brand->name}</td>
+			<td>
+				<button>Smazat</button>
+				<button>Editovat</button>
+			</td>
+		</tr>
+	</table>
+
+	<div class="pagination">
+		{if !$paginator->isFirst()}
+			<a n:href="default, $paginator->page-1">&lt;</a>
+			<a n:href="default, 1"> 1 </a>
+		{/if}
+
+		{if $paginator->getPage() - 1 >= 4}
+			...
+		{/if}
+		{foreach $paginator->getNearPages() as $page}
+			{if $page == $paginator->getPage()}
+				{$page}
+			{else}
+				<a  n:href="default, $page">{$page}</a>
+			{/if}
+		{/foreach}
+		{if $paginator->getPageCount() - $paginator->getPage() >= 4}
+			...
+		{/if}
+
+		{if !$paginator->isLast()}
+			<a n:href="default, $paginator->getPageCount()">{$paginator->getPageCount()}</a>
+			<a n:href="default, $paginator->page+1">&gt;</a>
+		{/if}
+	</div>
+{/block content}
