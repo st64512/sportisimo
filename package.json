@@ -1,0 +1,23 @@
+{
+  "name": "sportisimo",
+  "version": "1.0.0",
+  "description": "Nette Web Project =================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/st64512/sportisimo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/st64512/sportisimo/issues"
+  },
+  "homepage": "https://github.com/st64512/sportisimo#readme",
+  "dependencies": {
+    "naja": "^2.5.0"
+  }
+}
