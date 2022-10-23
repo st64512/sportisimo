@@ -6,13 +6,16 @@
 
 	<table>
 		<tr>
-			<th>Název</th>
+			<th>Název
+				<a n:href="default, $paginator->getPage(), 'DESC', $itemsPerPage">up</a>
+				<a n:href="default, $paginator->getPage(), 'ASC', $itemsPerPage">down</a>
+			</th>
 			<th>Akce</th>
 		</tr>
 		<tr n:foreach="$brands as $brand">
 			<td>{$brand->name}</td>
 			<td>
-				<button>Smazat</button>
+				<a n:href="removeBrand! $brand->id" class="ajax">Smazat</a>
 				<button>Editovat</button>
 			</td>
 		</tr>
@@ -20,8 +23,8 @@
 
 	<div class="pagination">
 		{if !$paginator->isFirst()}
-			<a n:href="default, $paginator->page-1">&lt;</a>
-			<a n:href="default, 1"> 1 </a>
+			<a n:href="default, $paginator->page-1, $direction, $itemsPerPage">&lt;</a>
+			<a n:href="default, 1, $direction, $itemsPerPage"> 1 </a>
 		{/if}
 
 		{if $paginator->getPage() - 1 >= 4}
@@ -31,7 +34,7 @@
 			{if $page == $paginator->getPage()}
 				{$page}
 			{else}
-				<a  n:href="default, $page">{$page}</a>
+				<a  n:href="default, $page, $direction, $itemsPerPage">{$page}</a>
 			{/if}
 		{/foreach}
 		{if $paginator->getPageCount() - $paginator->getPage() >= 4}
@@ -39,8 +42,15 @@
 		{/if}
 
 		{if !$paginator->isLast()}
-			<a n:href="default, $paginator->getPageCount()">{$paginator->getPageCount()}</a>
-			<a n:href="default, $paginator->page+1">&gt;</a>
+			<a n:href="default, $paginator->getPageCount(), $direction, $itemsPerPage">{$paginator->getPageCount(), $itemsPerPage}</a>
+			<a n:href="default, $paginator->page+1, $direction, $itemsPerPage">&gt;</a>
 		{/if}
+	</div>
+	<div class="pagination-count">
+		<a n:href="default, $paginator->getPage(), $direction, 5">5</a>
+
+		<a n:href="default, $paginator->getPage(), $direction, 10">10</a>
+
+		<a n:href="default, $paginator->getPage(), $direction, 15">15</a>
 	</div>
 {/block content}

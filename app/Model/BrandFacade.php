@@ -15,11 +15,16 @@ final class BrandFacade
         $this->database = $database;
     }
 
-    public function getBrands(int $limit, int $offset)
+    public function getBrands(int $limit, int $offset, string $orderingByName)
     {
-        return $this->database
-            ->table('brands')
-            ->limit($limit, $offset);
+        $query = $this->database
+            ->table('brands');
+
+        if ($orderingByName != "")
+            $query->order('name ' . $orderingByName);
+
+        $query->limit($limit, $offset);
+        return $query;
     }
 
     public function getBrandsCount(): int
@@ -27,6 +32,14 @@ final class BrandFacade
         return $this->database->fetchField('SELECT COUNT(*) FROM brands');
     }
 
+    public function deleteBrand(int $id)
+    {
+        $this->database
+            ->table('brands')
+            ->where('id', $id)
+            ->delete();
+    }
+
     //public function editBrand() {}
-    //public function deleteBrand() {}
+    //public function addBrand() {}
 }

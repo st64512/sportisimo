@@ -18,7 +18,7 @@ final class BrandListPresenter extends Nette\Application\UI\Presenter
         $this->facade = $facade;
     }
 
-    public function renderDefault(int $page = 1, int $itemsPerPage = 2): void
+    public function renderDefault(int $page = 1, string $direction = "", int $itemsPerPage = 2): void
     {
         $brandsCount = $this->facade->getBrandsCount();
         $paginator = new ListPaginator();
@@ -26,8 +26,25 @@ final class BrandListPresenter extends Nette\Application\UI\Presenter
             ->setItemsPerPage($itemsPerPage)
             ->setPage($page);
 
-        $brands = $this->facade->getBrands($paginator->getLength(), $paginator->getOffset());
+        $brands = $this->facade->getBrands($paginator->getLength(), $paginator->getOffset(), $direction);
         $this->template->brands = $brands;
         $this->template->paginator = $paginator;
+        $this->template->direction = $direction;
+        $this->template->itemsPerPage = $itemsPerPage;
+    }
+
+    public function handleRemoveBrand(int $id) : void
+    {
+        $this->facade->deleteBrand($id);
+    }
+
+    public function handleChangeOrderingByName(string $orderDirection)
+    {
+        if (strcmp($this->orderingByName, $orderDirection) == 0 )
+        {
+            $this->orderingByName = "";
+        } else {
+            $this->orderingByName = $orderDirection;
+        }
     }
 }
