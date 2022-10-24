@@ -18,7 +18,7 @@ final class BrandListPresenter extends Nette\Application\UI\Presenter
         $this->facade = $facade;
     }
 
-    public function renderDefault(int $page = 1, string $direction = "", int $itemsPerPage = 2): void
+    public function renderDefault(int $page = 1, int $itemsPerPage = 2, string $direction = ""): void
     {
         $brandsCount = $this->facade->getBrandsCount();
         $paginator = new ListPaginator();
@@ -30,6 +30,7 @@ final class BrandListPresenter extends Nette\Application\UI\Presenter
         $this->template->brands = $brands;
         $this->template->paginator = $paginator;
         $this->template->direction = $direction;
+        $this->template->pageCounts = [5, 10, 15];
         $this->template->itemsPerPage = $itemsPerPage;
     }
 

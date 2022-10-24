@@ -1,14 +1,14 @@
 {block content}
 	<div>
 		<h1 n:block="title">Značky</h1>
-		<button>Přidat značku</button>
+		<button id="addBrandButton">Přidat značku</button>
 	</div>
 
 	<table>
 		<tr>
 			<th>Název
-				<a n:href="default, $paginator->getPage(), 'DESC', $itemsPerPage">up</a>
-				<a n:href="default, $paginator->getPage(), 'ASC', $itemsPerPage">down</a>
+				<a n:href="default, $paginator->getPage(), $itemsPerPage, 'DESC'"><i class="tiny material-icons">arrow_upward</i></a>
+				<a n:href="default, $paginator->getPage(), $itemsPerPage, 'ASC'"><i class="tiny material-icons">arrow_downward</i></a>
 			</th>
 			<th>Akce</th>
 		</tr>
@@ -20,11 +20,14 @@
 			</td>
 		</tr>
 	</table>
-
-	<div class="pagination">
+	<ul class="pagination">
 		{if !$paginator->isFirst()}
-			<a n:href="default, $paginator->page-1, $direction, $itemsPerPage">&lt;</a>
-			<a n:href="default, 1, $direction, $itemsPerPage"> 1 </a>
+			<li class="waves-effect">
+				<a n:href="default, $paginator->page-1, $itemsPerPage, $direction">
+					<i class="material-icons">chevron_left</i>
+				</a>
+			</li>
+			<li class="waves-effect"><a n:href="default, 1, $itemsPerPage, $direction"> 1 </a></li>
 		{/if}
 
 		{if $paginator->getPage() - 1 >= 4}
@@ -32,9 +35,9 @@
 		{/if}
 		{foreach $paginator->getNearPages() as $page}
 			{if $page == $paginator->getPage()}
-				{$page}
+				<li class="active"><a href="#">{$page}</a></li>
 			{else}
-				<a  n:href="default, $page, $direction, $itemsPerPage">{$page}</a>
+				<li class="waves-effect"><a  n:href="default, $page, $itemsPerPage, $direction">{$page}</a></li>
 			{/if}
 		{/foreach}
 		{if $paginator->getPageCount() - $paginator->getPage() >= 4}
@@ -42,15 +45,22 @@
 		{/if}
 
 		{if !$paginator->isLast()}
-			<a n:href="default, $paginator->getPageCount(), $direction, $itemsPerPage">{$paginator->getPageCount(), $itemsPerPage}</a>
-			<a n:href="default, $paginator->page+1, $direction, $itemsPerPage">&gt;</a>
+			<li class="waves-effect"><a n:href="default, $paginator->getPageCount(), $itemsPerPage, $direction">{$paginator->getPageCount()}</a></li>
+			<li class="waves-effect">
+				<a n:href="default, $paginator->page+1, $itemsPerPage, $direction">
+					<i class="material-icons">chevron_right</i>
+				</a>
+			</li>
 		{/if}
-	</div>
-	<div class="pagination-count">
-		<a n:href="default, $paginator->getPage(), $direction, 5">5</a>
+	</ul>
+	<ul class="pagination">
+		{foreach $pageCounts as $pageCount}
+			{if $pageCount == $itemsPerPage}
+				<li class="active"><a href="#">{$pageCount}</a></li>
+			{else}
+				<li class="waves-effect"><a n:href="default, $page, $pageCount, $direction">{$pageCount}</a></li>
+			{/if}
+		{/foreach}
+	</ul>
 
-		<a n:href="default, $paginator->getPage(), $direction, 10">10</a>
-
-		<a n:href="default, $paginator->getPage(), $direction, 15">15</a>
-	</div>
 {/block content}

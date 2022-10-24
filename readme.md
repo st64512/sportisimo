@@ -44,3 +44,19 @@ should be ready to go.
 
 **It is CRITICAL that whole `app/`, `config/`, `log/` and `temp/` directories are not accessible directly
 via a web browser. See [security warning](https://nette.org/security-warning).**
+
+Rozjetí projektu
+----------------
+Stažení závislostí projektu
+
+    composer install
+
+Stažení knihoven a balíčku do node_modules
+
+    npm install
+
+Transformace stylů a překlad SASS na CSS
+
+    npx webpack
+
+
