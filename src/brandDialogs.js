@@ -21,18 +21,27 @@ for (var i = 0; i < brandEditButtons.length; i++) {
     });
 }
 
+brandAddButton.click(function () {
+    addNameInput.val('');
+    addDialog.show();
+});
+
 editDialogBtnClose.click(function () {
     editIdInput.val('');
     editNameInput.val('');
     editDialog.hide();
 });
 
-brandAddButton.click(function () {
-    addNameInput.val('');
-    addDialog.show();
-});
-
 addDialogBtnClose.click(function () {
     addNameInput.val('');
     addDialog.hide();
 });
+
+window.onclick = function(event) {
+    if (event.target == editDialog[0]) {
+        editDialog.hide();
+    }
+    if (event.target == addDialog[0]) {
+        addDialog.hide();
+    }
+}

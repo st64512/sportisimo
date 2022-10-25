@@ -66,15 +66,27 @@
 		{/foreach}
 	</ul>
 
-	<div id="edit-dialog" class="brand-dialog" style="display: none">
-		<h4>Editace</h4>
-		<button id="close-edit-dialog">Zavřít</button>
-		{control editForm}
+	<div id="edit-dialog" class="dialog-overlay">
+		<div class="dialog-content">
+			<div class="dialog-header">
+				<h4 class="dialog-title">Editace</h4>
+				<span id="close-edit-dialog" class="close-dialog"><i class="material-icons small">close</i></span>
+			</div>
+			<div class="dialog-body">
+				{control editForm}
+			</div>
+		</div>
 	</div>
 
-	<div id="add-dialog" class="brand-dialog" style="display: none">
-		<h4>Nová značka</h4>
-		<button id="close-add-dialog">Zavřít</button>
-		{control addForm}
+	<div id="add-dialog" class="dialog-overlay">
+		<div class="dialog-content">
+			<div class="dialog-header">
+				<h4 class="dialog-title">Nová značka</h4>
+				<span id="close-add-dialog" class="close-dialog"><i class="material-icons small">close</i></span>
+			</div>
+			<div class="dialog-body">
+				{control addForm}
+			</div>
+		</div>
 	</div>
 {/block content}
