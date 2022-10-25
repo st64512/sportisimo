@@ -1,76 +1,91 @@
 {block content}
-	<div>
-		<h1 n:block="title">Značky</h1>
-		<button id="add-brand-button">Přidat značku</button>
+	<div class="main">
+		<div class="main-title">
+			<h1 n:block="title">Značky</h1>
+		</div>
+		<div class="list">
+			<div class="list-header">
+				<a id="add-brand-button" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Přidat značku</a>
+			</div>
+			<div class="list-body">
+				{snippet brandList}
+					<table>
+						<thead>
+							<tr>
+								<th>Název
+									<a n:href="default, $paginator->getPage(), $itemsPerPage, 'DESC'"><i class="tiny material-icons">arrow_upward</i></a>
+									<a n:href="default, $paginator->getPage(), $itemsPerPage, 'ASC'"><i class="tiny material-icons">arrow_downward</i></a>
+								</th>
+								<th class="right-col">Akce</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr n:foreach="$brands as $brand">
+								<td>{$brand->name}</td>
+								<td class="right-col">
+									<a n:href="removeBrand! $brand->id" class="ajax">Smazat</a>
+									<a href="#" class="brand-edit" id="{$brand->id}-{$brand->name}">Editovat</a>
+								</td>
+							</tr>
+						</tbody>
+
+					</table>
+				{/snippet}
+			</div>
+			<div class="list-footer">
+
+				{snippet pagination}
+				<ul class="pagination">
+					{if !$paginator->isFirst()}
+						<li class="waves-effect">
+							<a n:href="default, $paginator->page-1, $itemsPerPage, $direction">
+								<i class="tiny material-icons">chevron_left</i>
+							</a>
+						</li>
+						<li class="waves-effect"><a n:href="default, 1, $itemsPerPage, $direction"> 1 </a></li>
+					{/if}
+
+					{if $paginator->getPage() - 1 >= 4}
+						<span>...</span>
+					{/if}
+					{foreach $paginator->getNearPages() as $page}
+						{if $page == $paginator->getPage()}
+							<li class="active"><a href="#">{$page}</a></li>
+						{else}
+							<li class="waves-effect"><a n:href="default, $page, $itemsPerPage, $direction">{$page}</a></li>
+						{/if}
+					{/foreach}
+					{if $paginator->getPageCount() - $paginator->getPage() >= 4}
+						<span>...</span>
+					{/if}
+
+					{if !$paginator->isLast()}
+						<li class="waves-effect"><a n:href="default, $paginator->getPageCount(), $itemsPerPage, $direction">{$paginator->getPageCount()}</a></li>
+						<li class="waves-effect">
+							<a n:href="default, $paginator->page+1, $itemsPerPage, $direction">
+								<i class="small material-icons">chevron_right</i>
+							</a>
+						</li>
+					{/if}
+				</ul>
+				<ul class="pagination">
+					{foreach $pageCounts as $pageCount}
+						{if $pageCount == $itemsPerPage}
+							<li class="active"><a href="#">{$pageCount}</a></li>
+						{else}
+							<li class="waves-effect"><a n:href="default, $page, $pageCount, $direction">{$pageCount}</a></li>
+						{/if}
+					{/foreach}
+				</ul>
+				{/snippet}
+			</div>
+		</div>
 	</div>
-{snippet brandList}
-	<table>
-		<tr>
-			<th>Název
-				<a n:href="default, $paginator->getPage(), $itemsPerPage, 'DESC'"><i class="tiny material-icons">arrow_upward</i></a>
-				<a n:href="default, $paginator->getPage(), $itemsPerPage, 'ASC'"><i class="tiny material-icons">arrow_downward</i></a>
-			</th>
-			<th>Akce</th>
-		</tr>
-
-			<tr n:foreach="$brands as $brand">
-				<td>{$brand->name}</td>
-				<td>
-					<a n:href="removeBrand! $brand->id" class="ajax">Smazat</a>
-					<a href="#" class="brand-edit" id="{$brand->id}-{$brand->name}">Editovat</a>
-				</td>
-			</tr>
-
-	</table>
-{/snippet}
-	<ul class="pagination">
-		{if !$paginator->isFirst()}
-			<li class="waves-effect">
-				<a n:href="default, $paginator->page-1, $itemsPerPage, $direction">
-					<i class="material-icons">chevron_left</i>
-				</a>
-			</li>
-			<li class="waves-effect"><a n:href="default, 1, $itemsPerPage, $direction"> 1 </a></li>
-		{/if}
-
-		{if $paginator->getPage() - 1 >= 4}
-			...
-		{/if}
-		{foreach $paginator->getNearPages() as $page}
-			{if $page == $paginator->getPage()}
-				<li class="active"><a href="#">{$page}</a></li>
-			{else}
-				<li class="waves-effect"><a n:href="default, $page, $itemsPerPage, $direction">{$page}</a></li>
-			{/if}
-		{/foreach}
-		{if $paginator->getPageCount() - $paginator->getPage() >= 4}
-			...
-		{/if}
-
-		{if !$paginator->isLast()}
-			<li class="waves-effect"><a n:href="default, $paginator->getPageCount(), $itemsPerPage, $direction">{$paginator->getPageCount()}</a></li>
-			<li class="waves-effect">
-				<a n:href="default, $paginator->page+1, $itemsPerPage, $direction">
-					<i class="material-icons">chevron_right</i>
-				</a>
-			</li>
-		{/if}
-	</ul>
-	<ul class="pagination">
-		{foreach $pageCounts as $pageCount}
-			{if $pageCount == $itemsPerPage}
-				<li class="active"><a href="#">{$pageCount}</a></li>
-			{else}
-				<li class="waves-effect"><a n:href="default, $page, $pageCount, $direction">{$pageCount}</a></li>
-			{/if}
-		{/foreach}
-	</ul>
-
 	<div id="edit-dialog" class="dialog-overlay">
 		<div class="dialog-content">
 			<div class="dialog-header">
 				<h4 class="dialog-title">Editace</h4>
-				<span id="close-edit-dialog" class="close-dialog"><i class="material-icons small">close</i></span>
+				<span id="close-edit-dialog" class="close-dialog"><i class="tiny material-icons">close</i></span>
 			</div>
 			<div class="dialog-body">
 				{control editForm}

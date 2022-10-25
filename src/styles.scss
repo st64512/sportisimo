@@ -1,6 +1,67 @@
+$blueColor: #58589d;
+$whiteColor: #fff;
+
 html {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+
+  .main {
+    margin: 30px;
+
+    .main-title h1 {
+      font-size: 30px;
+    }
+
+    .list {
+      .list-header {
+        margin: 15px;
+        #add-brand-button {
+          background-color: $blueColor;
+        }
+      }
+      .list-body {
+        a {
+          text-decoration: none;
+          color: #9f9f9f;
+          &:hover, &:focus {
+            color: #606060;
+          }
+        }
+        table {
+          border: 1px solid #d1d1d1;
+          thead {
+            background-color: #ebebeb;
+          }
+          .right-col {
+            text-align: right;
+          }
+          tr th, tr td {
+            padding-right: 20px;
+            padding-left: 20px;
+          }
+        }
+      }
+      .list-footer {
+        text-align: right;
+
+        .pagination {
+          margin: 2px;
+
+          span {
+            vertical-align: bottom;
+          }
+
+          li.active a {
+            color: #444;
+            background: $whiteColor;
+            border-bottom: 2px solid $blueColor;
+          }
+        }
+      }
+    }
+  }
 }
+
 
 .dialog-overlay {
   display: none;

@@ -40,6 +40,7 @@ final class BrandListPresenter extends Nette\Application\UI\Presenter
         $this->facade->deleteBrand($id);
         if ($this->isAjax()) {
             $this->redrawControl('brandList');
+            $this->redrawControl('pagination');
         }
 
     }
@@ -82,6 +83,9 @@ final class BrandListPresenter extends Nette\Application\UI\Presenter
     public function addFormSucceeded(Form $form, $data): void
     {
         $this->facade->addBrand($data);
-        $this->redrawControl('brandList');
+        if ($this->isAjax()) {
+            $this->redrawControl('brandList');
+            $this->redrawControl('pagination');
+        }
     }
 }
