@@ -1,9 +1,9 @@
 {block content}
 	<div>
 		<h1 n:block="title">Značky</h1>
-		<button id="addBrandButton">Přidat značku</button>
+		<button id="add-brand-button">Přidat značku</button>
 	</div>
-
+{snippet brandList}
 	<table>
 		<tr>
 			<th>Název
@@ -12,14 +12,17 @@
 			</th>
 			<th>Akce</th>
 		</tr>
-		<tr n:foreach="$brands as $brand">
-			<td>{$brand->name}</td>
-			<td>
-				<a n:href="removeBrand! $brand->id" class="ajax">Smazat</a>
-				<button>Editovat</button>
-			</td>
-		</tr>
+
+			<tr n:foreach="$brands as $brand">
+				<td>{$brand->name}</td>
+				<td>
+					<a n:href="removeBrand! $brand->id" class="ajax">Smazat</a>
+					<a href="#" class="brand-edit" id="{$brand->id}-{$brand->name}">Editovat</a>
+				</td>
+			</tr>
+
 	</table>
+{/snippet}
 	<ul class="pagination">
 		{if !$paginator->isFirst()}
 			<li class="waves-effect">
@@ -37,7 +40,7 @@
 			{if $page == $paginator->getPage()}
 				<li class="active"><a href="#">{$page}</a></li>
 			{else}
-				<li class="waves-effect"><a  n:href="default, $page, $itemsPerPage, $direction">{$page}</a></li>
+				<li class="waves-effect"><a n:href="default, $page, $itemsPerPage, $direction">{$page}</a></li>
 			{/if}
 		{/foreach}
 		{if $paginator->getPageCount() - $paginator->getPage() >= 4}
@@ -63,4 +66,15 @@
 		{/foreach}
 	</ul>
 
+	<div id="edit-dialog" class="brand-dialog" style="display: none">
+		<h4>Editace</h4>
+		<button id="close-edit-dialog">Zavřít</button>
+		{control editForm}
+	</div>
+
+	<div id="add-dialog" class="brand-dialog" style="display: none">
+		<h4>Nová značka</h4>
+		<button id="close-add-dialog">Zavřít</button>
+		{control addForm}
+	</div>
 {/block content}

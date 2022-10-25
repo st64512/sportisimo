@@ -7,6 +7,7 @@ namespace App\Presenters;
 use App\Model\BrandFacade;
 use App\Utils\ListPaginator;
 use Nette;
+use Nette\Application\UI\Form;
 
 
 final class BrandListPresenter extends Nette\Application\UI\Presenter
@@ -37,6 +38,10 @@ final class BrandListPresenter extends Nette\Application\UI\Presenter
     public function handleRemoveBrand(int $id) : void
     {
         $this->facade->deleteBrand($id);
+        if ($this->isAjax()) {
+            $this->redrawControl('brandList');
+        }
+
     }
 
     public function handleChangeOrderingByName(string $orderDirection)
@@ -47,5 +52,36 @@ final class BrandListPresenter extends Nette\Application\UI\Presenter
         } else {
             $this->orderingByName = $orderDirection;
         }
+    }
+
+    protected function createComponentEditForm(): Form
+    {
+        $form = new Form;
+        $form->addHidden('id')->setHtmlId('edit-id');
+        $form->addText('name', 'Name:')->setHtmlId('edit-name');
+        $form->addSubmit('send', 'Změnit');
+        $form->onSuccess[] = [$this, 'editFormSucceeded'];
+        return $form;
+    }
+
+    public function editFormSucceeded(Form $form, $data): void
+    {
+        $this->facade->editBrand($data);
+        $this->redrawControl('brandList');
+    }
+
+    protected function createComponentAddForm(): Form
+    {
+        $form = new Form;
+        $form->addText('name', 'Name:')->setHtmlId('add-name');
+        $form->addSubmit('send', 'Přidat');
+        $form->onSuccess[] = [$this, 'addFormSucceeded'];
+        return $form;
+    }
+
+    public function addFormSucceeded(Form $form, $data): void
+    {
+        $this->facade->addBrand($data);
+        $this->redrawControl('brandList');
     }
 }

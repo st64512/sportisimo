@@ -32,6 +32,10 @@ final class BrandFacade
         return $this->database->fetchField('SELECT COUNT(*) FROM brands');
     }
 
+    public function getBrandById(int $id) {
+        return $this->database->table('brands')->where('id', $id)->fetch();
+    }
+
     public function deleteBrand(int $id)
     {
         $this->database
@@ -40,6 +44,14 @@ final class BrandFacade
             ->delete();
     }
 
-    //public function editBrand() {}
-    //public function addBrand() {}
+    public function editBrand($data) {
+        $brandId = $data->id;
+        if ($brandId) {
+            $this->database->table('brands')->get($brandId)->update($data);
+        }
+    }
+
+    public function addBrand($data) {
+        $this->database->table('brands')->insert($data);
+    }
 }
